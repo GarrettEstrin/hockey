@@ -170,6 +170,16 @@ var possibleMoves = [];
     saveArray = [];
   }
 
+// Function to generate roll for RED TEAM faceoff
+var redTeamFaceOff = function(){
+  faceOffArray[0] = Math.random();
+  readyForFaceOff();
+}
+// Function to generate roll for BLUE TEAM faceoff
+var blueTeamFaceOff = function(){
+  faceOffArray[1] = Math.random();
+  readyForFaceOff();
+}
 
   // Function to decide faceoffs
   var faceOffFunc = function(){
@@ -178,6 +188,13 @@ var possibleMoves = [];
     }else {console.log('Blue Team Wins Faceoff!')}
     faceOffArray = [];
   }
+
+  // Function to check if there are two values in faceOffArray
+var readyForFaceOff = function(){
+  if(faceOffArray.length === 2){
+    faceOffFunc();
+  } else {console.log('Not ready for faceoff')}
+}
 
   // Move Functions
   // Function to populate array with possible moves
@@ -269,19 +286,28 @@ var possibleMovesForwardFunc = function(grid){
 return possibleMoves;
 }
 
+// Function to highlight move space
+
 // Function to add click event to grid
-$rink.on('click', '.grid', function(){
-  if($turn){
-  $(this).toggleClass('red');
-  $turn = false;
-  // console.log("Red Player at location " + $(this).attr('id'));
-}else {
-  $(this).toggleClass('blue');
-  $turn = true;
-  // console.log("Blue Player at location " + $(this).attr('id'));
-}});
+// $rink.on('click', '.grid', function(){
+//   if($turn){
+//   $(this).toggleClass('red');
+//   $turn = false;
+//   // console.log("Red Player at location " + $(this).attr('id'));
+// }else {
+//   $(this).toggleClass('blue');
+//   $turn = true;
+//   // console.log("Blue Player at location " + $(this).attr('id'));
+// }});
+
+// function to show possible moves when a square is clicked
 
 
 
 
 // Testing Section - Remove when testing is complete. If something is here, feature is not complete
+
+var testFaceOff = function(){
+  redTeamFaceOff();
+  blueTeamFaceOff();
+}

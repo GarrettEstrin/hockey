@@ -19,11 +19,11 @@ height: 500px;
   float: left;
 }
 
-#s00 {
+#s0 {
   border-top-left-radius: 50%;
 }
 
-#s09 {
+#s9 {
   border-top-right-radius: 50%;
 }
 
@@ -49,4 +49,8 @@ height: 500px;
 
 .blue {
   background-color: blue;
+}
+
+.possibleMove {
+  background-color: light-grey;
 }
