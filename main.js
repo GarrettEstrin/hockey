@@ -143,6 +143,12 @@ var saveArray = [];
     return saveArray[0] = Math.floor(Math.random() * (max - min)) + min;
   }
 
+  var generateDefenseShotFunc = function(){
+    min = Math.ceil(defense.shotFloor);
+    max = Math.floor(defense.shotCeiling);
+    return saveArray[0] = Math.floor(Math.random() * (max - min)) + min;
+  }
+
   var generateSaveFunc = function(){
     min = Math.ceil(goalie.saveFloor);
     max = Math.floor(goalie.saveCeiling);
@@ -176,6 +182,6 @@ $rink.on('click', '.grid', function(){
 // Testing Section - Remove when testing is complete. If something is here, feature is not complete
 
 var testShot = function(){
-  generateForwardShotFunc();
+  generateDefenseShotFunc();
   generateSaveFunc();
 }
