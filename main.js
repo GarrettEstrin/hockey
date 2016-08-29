@@ -7,7 +7,7 @@ $turn = false;
 var puckLocation = [
   0,0,0,0,0,0,0,0,0,0,
   0,0,0,0,0,0,0,0,0,0,
-  0,0,0,0,1,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,
   0,0,0,0,0,0,0,0,0,0,
   0,0,0,0,0,0,0,0,0,0];
 
@@ -55,7 +55,7 @@ var blueDefense2Location = [
 var redForward1Location = [
   0,0,0,0,0,0,0,0,0,0,
   0,0,0,0,0,0,0,0,0,0,
-  0,0,0,1,0,0,0,0,0,0,
+  0,0,0,0,1,0,0,0,0,0,
   0,0,0,0,0,0,0,0,0,0,
   0,0,0,0,0,0,0,0,0,0];
 
@@ -184,9 +184,13 @@ var blueTeamFaceOff = function(){
   // Function to decide faceoffs
   var faceOffFunc = function(){
     if(faceOffArray[0] > faceOffArray[1]){
+      puckLocation[23] = 1;
       console.log('Red Team Wins Faceoff!')
-    }else {console.log('Blue Team Wins Faceoff!')}
+    }else {
+      puckLocation[25] = 1;
+      console.log('Blue Team Wins Faceoff!')}
     faceOffArray = [];
+    puckLocation
   }
 
   // Function to check if there are two values in faceOffArray
@@ -310,4 +314,16 @@ return possibleMoves;
 var testFaceOff = function(){
   redTeamFaceOff();
   blueTeamFaceOff();
+}
+// Function to show locations of elements in console
+var showLocations = function(){
+  console.log('puck is in square ' + puckLocation.indexOf(1));
+  console.log('Red team forward is in square ' + redForward1Location.indexOf(1));
+  console.log('Red team defenseman 1 is in square ' + redDefense1Location.indexOf(1));
+  console.log('Red team defenseman 2 is in square ' + redDefense2Location.indexOf(1));
+  console.log('Blue team forward is in square ' + blueForward1Location.indexOf(1));
+  console.log('Blue team defenseman 1 is in square ' + blueDefense1Location.indexOf(1));
+  console.log('Blue team defenseman 2 is in square ' + blueDefense2Location.indexOf(1));
+
+
 }
