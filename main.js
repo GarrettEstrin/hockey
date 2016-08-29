@@ -111,6 +111,9 @@ var $rink = $('#rink');
 
 var saveArray = [];
 
+// Red team = [0], blue team = [1];
+var faceOffArray = [];
+
 
 
 // Functions
@@ -136,33 +139,44 @@ var saveArray = [];
 
   // Function to shoot the puck
 
-  // Function to generate shot value
+  // Function to generate shot values - forward and defense
   var generateForwardShotFunc = function(){
-    min = Math.ceil(forward.shotFloor);
-    max = Math.floor(forward.shotCeiling);
+    var min = Math.ceil(forward.shotFloor);
+    var max = Math.floor(forward.shotCeiling);
     return saveArray[0] = Math.floor(Math.random() * (max - min)) + min;
   }
 
   var generateDefenseShotFunc = function(){
-    min = Math.ceil(defense.shotFloor);
-    max = Math.floor(defense.shotCeiling);
+    var min = Math.ceil(defense.shotFloor);
+     var max = Math.floor(defense.shotCeiling);
     return saveArray[0] = Math.floor(Math.random() * (max - min)) + min;
   }
-
+// Function to generate goalie save value
   var generateSaveFunc = function(){
-    min = Math.ceil(goalie.saveFloor);
-    max = Math.floor(goalie.saveCeiling);
+    var min = Math.ceil(goalie.saveFloor);
+    var max = Math.floor(goalie.saveCeiling);
     saveArray[1] = Math.floor(Math.random() * (max - min)) + min;
     console.log(saveArray[1]);
     isGoal();
   }
-
+// Function to evaluate goal
   var isGoal = function(){
     if(saveArray[0] > saveArray[1]){
       console.log("Goal!");
     }else {console.log("Save!")}
     saveArray = [];
   }
+
+
+  // Function to decide faceoffs
+  var faceOffFunc = function(){
+    if(faceOffArray[0] > faceOffArray[1]){
+      console.log('Red Team Wins Faceoff!')
+    }else {console.log('Blue Team Wins Faceoff!')}
+    faceOffArray = [];
+  }
+
+
 
 // Function to add click event to grid
 $rink.on('click', '.grid', function(){
@@ -180,8 +194,3 @@ $rink.on('click', '.grid', function(){
 
 
 // Testing Section - Remove when testing is complete. If something is here, feature is not complete
-
-var testShot = function(){
-  generateDefenseShotFunc();
-  generateSaveFunc();
-}
