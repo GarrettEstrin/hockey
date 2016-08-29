@@ -1,0 +1,52 @@
+/* Custom CSS by Garrett Estrin | Garrett.Estrin.com */
+
+body {
+  margin: 20px auto;
+  width: 1000px;
+
+}
+
+#rink {
+width: 1000px;
+height: 500px;
+}
+
+.grid {
+  width: 98px;
+  height: 98px;
+  background-color: lightblue;
+  border: solid gray 1px;
+  float: left;
+}
+
+#s00 {
+  border-top-left-radius: 50%;
+}
+
+#s09 {
+  border-top-right-radius: 50%;
+}
+
+#s40 {
+  border-bottom-left-radius: 50%;
+}
+
+#s49 {
+  border-bottom-right-radius: 50%;
+}
+
+.puckRed {
+
+}
+
+.puckOrange {
+
+}
+
+.red {
+  background-color: red;
+}
+
+.orange {
+  background-color: orange;
+}
