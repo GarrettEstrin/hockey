@@ -13,23 +13,85 @@ var puckLocation = [
 
 var $puck = puckLocation.indexOf(1);
 
-var oFLocation = [
+// Blue team player locations
+
+// Blue forward
+
+var blueForward1Location = [
   0,0,0,0,0,0,0,0,0,0,
   0,0,0,0,0,0,0,0,0,0,
   0,0,0,0,0,1,0,0,0,0,
   0,0,0,0,0,0,0,0,0,0,
   0,0,0,0,0,0,0,0,0,0];
 
-var $bF = oFLocation.indexOf(1);
+var $blueForward1 = blueForward1Location.indexOf(1);
 
-var rFLocation = [
+// Blue defenseman1
+
+var blueDefense1Location = [
+  0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,1,0,0,
+  0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0];
+
+var $blueDefense1 = blueDefense1Location.indexOf(1);
+
+// Blue defenseMan2
+
+var blueDefense2Location = [
+  0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,1,0,0,
+  0,0,0,0,0,0,0,0,0,0];
+
+  var $blueDefense2 = blueDefense2Location.indexOf(1);
+
+// Red team player locations
+
+// Red team forward
+
+var redForward1Location = [
   0,0,0,0,0,0,0,0,0,0,
   0,0,0,0,0,0,0,0,0,0,
   0,0,0,1,0,0,0,0,0,0,
   0,0,0,0,0,0,0,0,0,0,
   0,0,0,0,0,0,0,0,0,0];
 
-var $rF = rFLocation.indexOf(1);
+var $redForward1 = redForward1Location.indexOf(1);
+
+// Red team defenseman1
+
+var redDefense1Location = [
+  0,0,0,0,0,0,0,0,0,0,
+  0,0,1,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0];
+
+var $redDefense1 = redDefense1Location.indexOf(1);
+
+// Red team defenseman1
+
+var redDefense2Location = [
+  0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,
+  0,0,1,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0];
+
+var $redDefense2 = redDefense2Location.indexOf(1);
+
+
+// Player Attributes
+
+var forward = [
+  'shotFloor': 5,
+  'shotCeiling': 10,
+  'skate': 3,
+  'pass' : 2
+]
 
 // Standalone variables
 
@@ -40,13 +102,13 @@ var $rink = $('#rink');
   var findPuck = function(){
     $puck = puckLocation.indexOf(1);
   }
-// Function to find RED FORWARD location
-  var findoF = function(){
-    $bF = bFLocation.indexOf(1);
-  }
 // Function to find BLUE FORWARD location
-  var findrF = function(){
-    $rF = rFLocation.indexOf(1);
+  var findBlueForward = function(){
+    $bF = blueForwardLocation.indexOf(1);
+  }
+// Function to find RED FORWARD location
+  var findredForward = function(){
+    $rF = redForwardLocation.indexOf(1);
   }
 // Function to move location of puck
   var movePuck = function(location){
@@ -63,7 +125,7 @@ $rink.on('click', '.grid', function(){
   $turn = false;
   console.log("Red Player at location " + $(this).attr('id'));
 }else {
-  $(this).toggleClass('orange');
+  $(this).toggleClass('blue');
   $turn = true;
-  console.log("Orange Player at location " + $(this).attr('id'));
+  console.log("Blue Player at location " + $(this).attr('id'));
 }});
