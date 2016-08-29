@@ -114,6 +114,9 @@ var saveArray = [];
 // Red team = [0], blue team = [1];
 var faceOffArray = [];
 
+// Move Array
+var possibleMoves = [];
+
 
 
 // Functions
@@ -176,18 +179,106 @@ var faceOffArray = [];
     faceOffArray = [];
   }
 
+  // Move Functions
+  // Function to populate array with possible moves
 
+// var possibleMovesForwardFunc = function(grid){
+//   possibleMoves[0] = grid - 20;
+//   possibleMoves[1] = grid - 11;
+//   possibleMoves[2] = grid - 10;
+//   possibleMoves[3] = grid - 9
+//   possibleMoves[4] = grid - 2;
+//   possibleMoves[5] = grid - 1;
+//   possibleMoves[6] = grid;
+//   possibleMoves[7] = grid + 1;
+//   possibleMoves[8] = grid + 2;
+//   possibleMoves[9] = grid + 9;
+//   possibleMoves[10] = grid + 10,
+//   possibleMoves[11] = grid + 11;
+//   possibleMoves[12] = grid + 20;
+//   return possibleMoves;
+// }
+
+var possibleMovesForwardFunc = function(grid){
+  if((grid - 20) > -1 && (grid - 20) < 50){
+    possibleMoves.push(grid - 20)
+  } else {
+    // do nothing
+  };
+  if((grid - 11) > -1 && (grid -11) < 49){
+    possibleMoves.push(grid - 11)
+  } else {
+    // do nothing
+  };
+  if((grid - 10) > -1 && (grid -10) < 49){
+    possibleMoves.push(grid - 10)
+  } else {
+    // do nothing
+  };
+  if((grid - 9) > -1 && (grid - 9) < 49){
+    possibleMoves.push(grid - 9)
+  } else {
+    // do nothing
+  };
+  if((grid - 2) > -1 && (grid - 2) < 49){
+    possibleMoves.push(grid - 2)
+  } else {
+    // do nothing
+  };
+  if((grid - 1) > -1 && (grid - 1) < 49){
+    possibleMoves.push(grid - 1)
+  } else {
+    // do nothing
+  };
+  if((grid - 0) > -1 && (grid - 0) < 49){
+    possibleMoves.push(grid - 0)
+  } else {
+    // do nothing
+  };
+  if((grid + 1) > -1 && (grid + 1) < 49){
+    possibleMoves.push(grid + 1)
+  } else {
+    // do nothing
+  };
+  if((grid + 2) > -1 && (grid + 2) < 49){
+    possibleMoves.push(grid + 2)
+  } else {
+    // do nothing
+  };
+  if((grid + 9) > -1 && (grid + 9) < 49){
+    possibleMoves.push(grid + 9)
+  } else {
+    // do nothing
+  };
+  if((grid + 10) > -1 && (grid + 10) < 49){
+    possibleMoves.push(grid + 10)
+  } else {
+    // do nothing
+  };
+  if((grid + 11) > -1 && (grid + 11) < 49){
+    possibleMoves.push(grid + 11)
+  } else {
+    // do nothing
+  };
+  if((grid + 20) > -1 && (grid + 20) < 49){
+    possibleMoves.push(grid + 20)
+  } else {
+    // do nothing
+  };
+// end of possibleMovesForwardFunc
+return possibleMoves;
+}
 
 // Function to add click event to grid
 $rink.on('click', '.grid', function(){
   if($turn){
   $(this).toggleClass('red');
   $turn = false;
-  console.log("Red Player at location " + $(this).attr('id'));
+  // console.log("Red Player at location " + $(this).attr('id'));
 }else {
   $(this).toggleClass('blue');
   $turn = true;
-  console.log("Blue Player at location " + $(this).attr('id'));
+  // console.log("Blue Player at location " + $(this).attr('id'));
 }});
 
 
