@@ -35,6 +35,6 @@ Everything...
 
 ## Feature Wish List
 
-* Player animations
+* Really Bitchen Player animations!
 * Landing Screen
 * Network play
