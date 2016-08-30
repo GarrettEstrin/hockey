@@ -115,10 +115,31 @@ var $startBtn = $('#startBtn');
 
 // Red team = [0], blue team = [1];
 var faceOffArray = [];
+// Team Arrays
+// Red Team
+redArray = [];
+// Blue Team
+blueArray = [];
+
 
 // Move Array's
 var possibleMoves = [];
 var currentMove = [];
+
+// H1 in message area
+var $h1 = $('h1');
+// H2 in message area - sub-message
+var $h2 = $('h2');
+
+// Variables for contextual menus
+// Puck in offensive zone
+var $offensePuckActions = $('#offensePuckActions');
+// No puck in offensive zone
+var $offenseActions = $('#offenseActions');
+// Puck in defensive zone
+var $defensePuckActions = $('#defensePuckActions');
+// No puck in defensive zone
+var $defenseActions = $('#defenseActions');
 
 
 
@@ -176,11 +197,13 @@ var currentMove = [];
 // Function to generate roll for RED TEAM faceoff
 var redTeamFaceOff = function(){
   faceOffArray[0] = Math.random();
+  $('#s24').off();
   readyForFaceOff();
 }
 // Function to generate roll for BLUE TEAM faceoff
 var blueTeamFaceOff = function(){
   faceOffArray[1] = Math.random();
+  $('#s25').off();
   readyForFaceOff();
 }
 
@@ -188,19 +211,89 @@ var blueTeamFaceOff = function(){
   var faceOffFunc = function(){
     if(faceOffArray[0] > faceOffArray[1]){
       puckLocation[24] = 1;
-      console.log('Red Team Wins Faceoff!')
+      $h1.text('Red Team Wins Faceoff!');
+      $h2.text("Red Team's Turn");
+      turn = true;
     }else {
       puckLocation[25] = 1;
-      console.log('Blue Team Wins Faceoff!')}
-    faceOffArray = [];
-    puckLocation
+      $h1.text('Blue Team Wins Faceoff!');
+      $h2.text("Blue Team's Turn")
+      turn = false;
+    }faceOffArray = [];
+    whosTurn();
+  }
+  // Build teams at start of turns functions
+  // RED TEAM
+  var buildRed = function(){
+    redArray.push('#s' + redForward1Location.indexOf(1));
+    redArray.push('#s' + redDefense1Location.indexOf(1));
+    redArray.push('#s' + redDefense2Location.indexOf(1));
+  }
+
+  // BLUE TEAM
+  var buildBlue = function(){
+    blueArray.push('#s' + blueForward1Location.indexOf(1));
+    blueArray.push('#s' + blueDefense1Location.indexOf(1));
+    blueArray.push('#s' + blueDefense2Location.indexOf(1));
   }
 
   // Function to check if there are two values in faceOffArray
 var readyForFaceOff = function(){
-  if(faceOffArray.length === 2){
+  if(faceOffArray[0] !== undefined && faceOffArray[1] !== undefined){
     faceOffFunc();
+    buildLocations();
   } else {console.log('Not ready for faceoff')}
+}
+
+// Turn functions
+var whosTurn = function(){
+  if(turn){
+    redTurn();
+    console.log('Red teams turn');
+  }else{
+    blueTurn();
+    console.log('Blue teams turn');
+  }
+}
+
+// RED TEAM turn
+
+var redTurn = function(){
+  buildRed();
+  for(var i = 0; i < redArray.length; i++){
+    $(redArray[i]).on('click', function(){
+      console.log(this.id);
+      if((this.id == s0 || s1 || s2 || s3 || s4 || s10 || s11 || s12 || s13 || s14 || s20 || s21 || s22 || s23 || s24 || s30 || s31 || s32 || s33 || s34 || s40 || s41 || s42 || s43 || s44) && (this.id == 's' + puckLocation.indexOf(1))){
+        $defensePuckActions.removeClass('hide');
+      } else if ((this.id == s0 || s1 || s2 || s3 || s4 || s10 || s11 || s12 || s13 || s14 || s20 || s21 || s22 || s23 || s24 || s30 || s31 || s32 || s33 || s34 || s40 || s41 || s42 || s43 || s44) && (this.id !== 's' + puckLocation.indexOf(1))){
+        $defenseActions.removeClass('hide');
+      } else if((this.id == s5 || s6 || s7 || s8 || s9 || s15 || s16 || s17 || s18 || s19 || s25 || s26 || s27 || 28 || s29 || s35 || s36 || s37 || s38 || s39 || s45 || s46 || s47 || s48 || s49) && (this.id == 's' +  puckLocation.indexOf(1))){
+        $offensePuckActions.removeClass('hide');
+    }else if((this.id == s5 || s6 || s7 || s8 || s9 || s15 || s16 || s17 || s18 || s19 || s25 || s26 || s27 || 28 || s29 || s35 || s36 || s37 || s38 || s39 || s45 || s46 || s47 || s48 || s49) && (this.id !== 's' +  puckLocation.indexOf(1))){
+      $offenseActions.removeClass('hide');
+    }
+
+    })
+  }
+}
+
+// BLUE TEAM turn
+var blueTurn = function(){
+  buildBlue();
+  for(var i = 0; i < blueArray.length; i++){
+    $(blueArray[i]).on('click', function(){
+       if((this.id == s5 || s6 || s7 || s8 || s9 || s15 || s16 || s17 || s18 || s19 || s25 || s26 || s27 || 28 || s29 || s35 || s36 || s37 || s38 || s39 || s45 || s46 || s47 || s48 || s49) && (this.id == 's' +  puckLocation.indexOf(1))){
+         $defensePuckActions.removeClass('hide');
+     }else if((this.id == s5 || s6 || s7 || s8 || s9 || s15 || s16 || s17 || s18 || s19 || s25 || s26 || s27 || 28 || s29 || s35 || s36 || s37 || s38 || s39 || s45 || s46 || s47 || s48 || s49) && (this.id !== 's' +  puckLocation.indexOf(1))){
+       $defenseActions.removeClass('hide');
+     }else if((this.id == s0 || s1 || s2 || s3 || s4 || s10 || s11 || s12 || s13 || s14 || s20 || s21 || s22 || s23 || s24 || s30 || s31 || s32 || s33 || s34 || s40 || s41 || s42 || s43 || s44) && (this.id == 's' + puckLocation.indexOf(1))){
+       $offensePuckActions.removeClass('hide');
+     }else if ((this.id == s0 || s1 || s2 || s3 || s4 || s10 || s11 || s12 || s13 || s14 || s20 || s21 || s22 || s23 || s24 || s30 || s31 || s32 || s33 || s34 || s40 || s41 || s42 || s43 || s44) && (this.id !== 's' + puckLocation.indexOf(1))){
+       $offenseActions.removeClass('hide');
+     }
+
+    })
+  }
 }
 
   // Move Functions
@@ -299,10 +392,10 @@ var movePuck = function(){
 // }});
 
 // function to show possible moves when a square is clicked
-$('.grid').on('click', function(){
-  possibleMovesForwardFunc(Number($(this).attr('data-space')));
-  console.log($(this).attr('data-space'));
-})
+// $('.grid').on('click', function(){
+//   possibleMovesForwardFunc(Number($(this).attr('data-space')));
+//   console.log($(this).attr('data-space'));
+// })
 
 var showPossibleMoves = function(){
   for(var i = 0; i<possibleMoves.length; i++){
@@ -315,12 +408,11 @@ var showPossibleMoves = function(){
 
 // Testing Section - Remove when testing is complete. If something is here, feature is not complete
 
-var testFaceOff = function(){
-  redTeamFaceOff();
-  blueTeamFaceOff();
-  buildLocations();
-}
+// if(s24 == s0 || s1 || s2 || s3 || s4 || s10 || s11 || s12 || s13 || s14 || s20 || s21 || s22 || s23 || s24 || s30 || s31 || s32 || s33 || s34 || s40 || s41 || s42 || s43 || s44){
+//   console.log('true');
+// }
 
+// End testing section
 var buildLocations = function(){
   // RED TEAM
   $redForward1 = redForward1Location.indexOf(1);
@@ -357,6 +449,12 @@ var showLocations = function(){
 
 var initialize = function(){
   buildLocations();
+  $startBtn.addClass('hide');
+  $h1.text('FACEOFF!');
+  $h2.text('Click your forward for the faceoff.');
+  $('#s24').on('click', redTeamFaceOff);
+  $('#s25').on('click', blueTeamFaceOff);
+
 }
 
 // On click for start button
