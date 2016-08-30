@@ -106,16 +106,19 @@ var goalie = {
 }
 
 // Standalone variables
-
+// Variable to find the rink
 var $rink = $('#rink');
-
+// Empty array for shot and save values
 var saveArray = [];
+// Start Game Button
+var $startBtn = $('#startBtn');
 
 // Red team = [0], blue team = [1];
 var faceOffArray = [];
 
-// Move Array
+// Move Array's
 var possibleMoves = [];
+var currentMove = [];
 
 
 
@@ -184,7 +187,7 @@ var blueTeamFaceOff = function(){
   // Function to decide faceoffs
   var faceOffFunc = function(){
     if(faceOffArray[0] > faceOffArray[1]){
-      puckLocation[23] = 1;
+      puckLocation[24] = 1;
       console.log('Red Team Wins Faceoff!')
     }else {
       puckLocation[25] = 1;
@@ -202,23 +205,6 @@ var readyForFaceOff = function(){
 
   // Move Functions
   // Function to populate array with possible moves
-
-// var possibleMovesForwardFunc = function(grid){
-//   possibleMoves[0] = grid - 20;
-//   possibleMoves[1] = grid - 11;
-//   possibleMoves[2] = grid - 10;
-//   possibleMoves[3] = grid - 9
-//   possibleMoves[4] = grid - 2;
-//   possibleMoves[5] = grid - 1;
-//   possibleMoves[6] = grid;
-//   possibleMoves[7] = grid + 1;
-//   possibleMoves[8] = grid + 2;
-//   possibleMoves[9] = grid + 9;
-//   possibleMoves[10] = grid + 10,
-//   possibleMoves[11] = grid + 11;
-//   possibleMoves[12] = grid + 20;
-//   return possibleMoves;
-// }
 
 var possibleMovesForwardFunc = function(grid){
   if((grid - 20) > -1 && (grid - 20) < 50){
@@ -287,7 +273,15 @@ var possibleMovesForwardFunc = function(grid){
     // do nothing
   };
 // end of possibleMovesForwardFunc
-return possibleMoves;
+showPossibleMoves();
+}
+
+// Function to move puckLocation position
+var movePuck = function(){
+  puckLocation[currentMove[0]] = 0;
+  puckLocation[currentMove[1]] = 1;
+  currentMove = [];
+
 }
 
 // Function to highlight move space
@@ -305,6 +299,16 @@ return possibleMoves;
 // }});
 
 // function to show possible moves when a square is clicked
+$('.grid').on('click', function(){
+  possibleMovesForwardFunc(Number($(this).attr('data-space')));
+  console.log($(this).attr('data-space'));
+})
+
+var showPossibleMoves = function(){
+  for(var i = 0; i<possibleMoves.length; i++){
+    $('#s' + possibleMoves[i]).addClass('possibleMove');
+  };
+}
 
 
 
@@ -314,10 +318,33 @@ return possibleMoves;
 var testFaceOff = function(){
   redTeamFaceOff();
   blueTeamFaceOff();
+  buildLocations();
+}
+
+var buildLocations = function(){
+  // RED TEAM
+  $redForward1 = redForward1Location.indexOf(1);
+  $('#s' + $redForward1).addClass('redForward');
+  $redDefense1 = redDefense1Location.indexOf(1);
+  $('#s' + $redDefense1).addClass('redDefense');
+  $redDefense2 = redDefense2Location.indexOf(1);
+  $('#s' + $redDefense2).addClass('redDefense');
+  // BLUE TEAM
+  $blueForward1 = blueForward1Location.indexOf(1);
+  $('#s' + $blueForward1).addClass('blueForward');
+  $blueDefense1 = blueDefense1Location.indexOf(1);
+  $('#s' + $blueDefense1).addClass('blueDefense');
+  $blueDefense2 = blueDefense2Location.indexOf(1);
+  $('#s' + $blueDefense2).addClass('blueDefense');
+
+  // Puck
+  $puck = puckLocation.indexOf(1);
+  $('#s' + $puck).addClass('puck');
+
 }
 // Function to show locations of elements in console
 var showLocations = function(){
-  console.log('puck is in square ' + puckLocation.indexOf(1));
+  console.log('Puck is in square ' + puckLocation.indexOf(1));
   console.log('Red team forward is in square ' + redForward1Location.indexOf(1));
   console.log('Red team defenseman 1 is in square ' + redDefense1Location.indexOf(1));
   console.log('Red team defenseman 2 is in square ' + redDefense2Location.indexOf(1));
@@ -327,3 +354,10 @@ var showLocations = function(){
 
 
 }
+
+var initialize = function(){
+  buildLocations();
+}
+
+// On click for start button
+$startBtn.on('click', initialize);

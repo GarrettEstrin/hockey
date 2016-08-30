@@ -14,8 +14,7 @@ height: 500px;
 .grid {
   width: 98px;
   height: 98px;
-  background-color: lightblue;
-  border: solid gray 1px;
+  border: solid rgb(245, 245, 245) 1px;
   float: left;
 }
 
@@ -43,14 +42,30 @@ height: 500px;
 
 }
 
-.red {
+.redDefense {
   background-color: red;
 }
 
-.blue {
+.blueDefense {
   background-color: blue;
 }
 
+.redForward {
+  background-color: red;
+  border-radius: 50%
+}
+
+.blueForward {
+  background-color: blue;
+  border-radius: 50%
+}
+
+.puck {
+background-image: url(./puck.png);
+background-position: center;
+background-repeat: no-repeat;
+}
+
 .possibleMove {
-  background-color: light-grey;
+  background-color: grey;
 }
