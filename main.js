@@ -107,7 +107,9 @@ var goalie = {
 
 // Standalone variables
 // Variable to find the rink
-var $rink = $('#rink');
+var $rink = $('#rink')[0];
+// Grid selection
+var $grid = $('.grid');
 // Empty array for shot and save values
 var saveArray = [];
 // Start Game Button
@@ -140,6 +142,14 @@ var $offenseActions = $('#offenseActions');
 var $defensePuckActions = $('#defensePuckActions');
 // No puck in defensive zone
 var $defenseActions = $('#defenseActions');
+// Menu
+var $menu = $('#menu');
+// Menu options
+var $skate = $('#skate')[0];
+
+var $shoot = $('#shoot')[0];
+var $pass = $('#pass')[0];
+var $takeaway = $('#takeaway')[0];
 
 
 
@@ -255,6 +265,116 @@ var whosTurn = function(){
     console.log('Blue teams turn');
   }
 }
+// Move Functions
+// Function to populate array with possible moves
+
+var possibleMovesForwardFunc = function(grid){
+if((grid - 20) > -1 && (grid - 20) < 50){
+  possibleMoves.push(grid - 20)
+} else {
+  // do nothing
+};
+if((grid - 11) > -1 && (grid -11) < 49){
+  possibleMoves.push(grid - 11)
+} else {
+  // do nothing
+};
+if((grid - 10) > -1 && (grid -10) < 49){
+  possibleMoves.push(grid - 10)
+} else {
+  // do nothing
+};
+if((grid - 9) > -1 && (grid - 9) < 49){
+  possibleMoves.push(grid - 9)
+} else {
+  // do nothing
+};
+if((grid - 2) > -1 && (grid - 2) < 49){
+  possibleMoves.push(grid - 2)
+} else {
+  // do nothing
+};
+if((grid - 1) > -1 && (grid - 1) < 49){
+  possibleMoves.push(grid - 1)
+} else {
+  // do nothing
+};
+if((grid - 0) > -1 && (grid - 0) < 49){
+  possibleMoves.push(grid - 0)
+} else {
+  // do nothing
+};
+if((grid + 1) > -1 && (grid + 1) < 49){
+  possibleMoves.push(grid + 1)
+} else {
+  // do nothing
+};
+if((grid + 2) > -1 && (grid + 2) < 49){
+  possibleMoves.push(grid + 2)
+} else {
+  // do nothing
+};
+if((grid + 9) > -1 && (grid + 9) < 49){
+  possibleMoves.push(grid + 9)
+} else {
+  // do nothing
+};
+if((grid + 10) > -1 && (grid + 10) < 49){
+  possibleMoves.push(grid + 10)
+} else {
+  // do nothing
+};
+if((grid + 11) > -1 && (grid + 11) < 49){
+  possibleMoves.push(grid + 11)
+} else {
+  // do nothing
+};
+if((grid + 20) > -1 && (grid + 20) < 49){
+  possibleMoves.push(grid + 20)
+} else {
+  // do nothing
+};
+// end of possibleMovesForwardFunc
+showPossibleMoves();
+}
+
+var showPossibleMoves = function() {
+  for(var i = 0; i < possibleMoves.length; i++){
+    $('#s' + possibleMoves[i]).addClass('possibleMove');
+  }
+    $('.grid').off();
+    move2();
+}
+
+// Function to populate currentMove[1]
+var move2 = function() {
+  for(var i = 0; i < possibleMoves.length; i++){
+    $('#s' + possibleMoves[i]).on('click', function(){
+      var temp = this.getAttribute('data-space');
+      currentMove[1] = Number(temp);
+
+      movePlayer();
+    })
+  }
+}
+
+var movePlayer = function(){
+  for(var i = 0; i < possibleMoves.length; i++){
+    $('#s' + possibleMoves[i]).removeClass('possibleMove')
+  };
+   $grid.off();
+   if(currentMove[0] == puckLocation.indexOf(1)){
+     puckLocation[currentMove[0]] = 0;
+     puckLocation[currentMove[1]] = 1;
+     $puck = puckLocation.indexOf(1);
+    //  Code here to select and move player
+  } else{
+    // move just Player
+  };
+
+   buildLocations();
+}
+
 
 // RED TEAM turn
 
@@ -262,19 +382,30 @@ var redTurn = function(){
   buildRed();
   for(var i = 0; i < redArray.length; i++){
     $(redArray[i]).on('click', function(){
-      console.log(this.id);
-      if((this.id == s0 || s1 || s2 || s3 || s4 || s10 || s11 || s12 || s13 || s14 || s20 || s21 || s22 || s23 || s24 || s30 || s31 || s32 || s33 || s34 || s40 || s41 || s42 || s43 || s44) && (this.id == 's' + puckLocation.indexOf(1))){
-        $defensePuckActions.removeClass('hide');
-      } else if ((this.id == s0 || s1 || s2 || s3 || s4 || s10 || s11 || s12 || s13 || s14 || s20 || s21 || s22 || s23 || s24 || s30 || s31 || s32 || s33 || s34 || s40 || s41 || s42 || s43 || s44) && (this.id !== 's' + puckLocation.indexOf(1))){
-        $defenseActions.removeClass('hide');
-      } else if((this.id == s5 || s6 || s7 || s8 || s9 || s15 || s16 || s17 || s18 || s19 || s25 || s26 || s27 || 28 || s29 || s35 || s36 || s37 || s38 || s39 || s45 || s46 || s47 || s48 || s49) && (this.id == 's' +  puckLocation.indexOf(1))){
-        $offensePuckActions.removeClass('hide');
-    }else if((this.id == s5 || s6 || s7 || s8 || s9 || s15 || s16 || s17 || s18 || s19 || s25 || s26 || s27 || 28 || s29 || s35 || s36 || s37 || s38 || s39 || s45 || s46 || s47 || s48 || s49) && (this.id !== 's' +  puckLocation.indexOf(1))){
-      $offenseActions.removeClass('hide');
-    }
-
+      var temp = this.getAttribute('data-space');
+      currentMove[0] = Number(temp);
+      currentMove[2] = this.id;
+      possibleMovesForwardFunc(Number(temp));
     })
   }
+  // for(var i = 0; i < redArray.length; i++){
+  //   $(redArray[i]).on('click', function(){
+  //     if((this.id == s0 || s1 || s2 || s3 || s4 || s10 || s11 || s12 || s13 || s14 || s20 || s21 || s22 || s23 || s24 || s30 || s31 || s32 || s33 || s34 || s40 || s41 || s42 || s43 || s44) && (this.id == 's' + puckLocation.indexOf(1))){
+  //       var temp = this.getAttribute('data-space')
+  //       possibleMovesForwardFunc(Number(temp));
+  //     } else if ((this.id == s0 || s1 || s2 || s3 || s4 || s10 || s11 || s12 || s13 || s14 || s20 || s21 || s22 || s23 || s24 || s30 || s31 || s32 || s33 || s34 || s40 || s41 || s42 || s43 || s44) && (this.id !== 's' + puckLocation.indexOf(1))){
+  //       var temp = this.getAttribute('data-space')
+  //       possibleMovesForwardFunc(Number(temp));
+  //     } else if((this.id == s5 || s6 || s7 || s8 || s9 || s15 || s16 || s17 || s18 || s19 || s25 || s26 || s27 || 28 || s29 || s35 || s36 || s37 || s38 || s39 || s45 || s46 || s47 || s48 || s49) && (this.id == 's' +  puckLocation.indexOf(1))){
+  //       var temp = this.getAttribute('data-space')
+  //       possibleMovesForwardFunc(Number(temp));
+  //   }else if((this.id == s5 || s6 || s7 || s8 || s9 || s15 || s16 || s17 || s18 || s19 || s25 || s26 || s27 || 28 || s29 || s35 || s36 || s37 || s38 || s39 || s45 || s46 || s47 || s48 || s49) && (this.id !== 's' +  puckLocation.indexOf(1))){
+  //     var temp = this.getAttribute('data-space')
+  //     possibleMovesForwardFunc(Number(temp));
+  //   }
+  //
+  // })
+  // }
 }
 
 // BLUE TEAM turn
@@ -282,156 +413,78 @@ var blueTurn = function(){
   buildBlue();
   for(var i = 0; i < blueArray.length; i++){
     $(blueArray[i]).on('click', function(){
-       if((this.id == s5 || s6 || s7 || s8 || s9 || s15 || s16 || s17 || s18 || s19 || s25 || s26 || s27 || 28 || s29 || s35 || s36 || s37 || s38 || s39 || s45 || s46 || s47 || s48 || s49) && (this.id == 's' +  puckLocation.indexOf(1))){
-         $defensePuckActions.removeClass('hide');
-     }else if((this.id == s5 || s6 || s7 || s8 || s9 || s15 || s16 || s17 || s18 || s19 || s25 || s26 || s27 || 28 || s29 || s35 || s36 || s37 || s38 || s39 || s45 || s46 || s47 || s48 || s49) && (this.id !== 's' +  puckLocation.indexOf(1))){
-       $defenseActions.removeClass('hide');
-     }else if((this.id == s0 || s1 || s2 || s3 || s4 || s10 || s11 || s12 || s13 || s14 || s20 || s21 || s22 || s23 || s24 || s30 || s31 || s32 || s33 || s34 || s40 || s41 || s42 || s43 || s44) && (this.id == 's' + puckLocation.indexOf(1))){
-       $offensePuckActions.removeClass('hide');
-     }else if ((this.id == s0 || s1 || s2 || s3 || s4 || s10 || s11 || s12 || s13 || s14 || s20 || s21 || s22 || s23 || s24 || s30 || s31 || s32 || s33 || s34 || s40 || s41 || s42 || s43 || s44) && (this.id !== 's' + puckLocation.indexOf(1))){
-       $offenseActions.removeClass('hide');
-     }
-
+      var temp = this.getAttribute('data-space');
+      currentMove[0] = Number(temp);
+      currentMove[2] = this.id;
+      possibleMovesForwardFunc(Number(temp));
     })
   }
+  // for(var i = 0; i < blueArray.length; i++){
+  //   $(blueArray[i]).on('click', function(){
+  //      if((this.id == s5 || s6 || s7 || s8 || s9 || s15 || s16 || s17 || s18 || s19 || s25 || s26 || s27 || s28 || s29 || s35 || s36 || s37 || s38 || s39 || s45 || s46 || s47 || s48 || s49) && (this.id == 's' +  puckLocation.indexOf(1))){
+  //        var temp = this.getAttribute('data-space')
+  //        possibleMovesForwardFunc(Number(temp));
+  //    }else if((this.id == s5 || s6 || s7 || s8 || s9 || s15 || s16 || s17 || s18 || s19 || s25 || s26 || s27 || s28 || 29 || s35 || s36 || s37 || s38 || s39 || s45 || s46 || s47 || s48 || s49) && (this.id !== 's' +  puckLocation.indexOf(1))){
+  //      var temp = this.getAttribute('data-space')
+  //      possibleMovesForwardFunc(Number(temp));
+  //    }else if((this.id == s0 || s1 || s2 || s3 || s4 || s10 || s11 || s12 || s13 || s14 || s20 || s21 || s22 || s23 || s24 || s30 || s31 || s32 || s33 || s34 || s40 || s41 || s42 || s43 || s44) && (this.id == 's' + puckLocation.indexOf(1))){
+  //      var temp = this.getAttribute('data-space')
+  //      possibleMovesForwardFunc(Number(temp));
+  //    }else if ((this.id == s0 || s1 || s2 || s3 || s4 || s10 || s11 || s12 || s13 || s14 || s20 || s21 || s22 || s23 || s24 || s30 || s31 || s32 || s33 || s34 || s40 || s41 || s42 || s43 || s44) && (this.id !== 's' + puckLocation.indexOf(1))){
+  //      var temp = this.getAttribute('data-space')
+  //      possibleMovesForwardFunc(Number(temp));
+  //    }
+  //
+  //   })
+  // }
 }
-
-  // Move Functions
-  // Function to populate array with possible moves
-
-var possibleMovesForwardFunc = function(grid){
-  if((grid - 20) > -1 && (grid - 20) < 50){
-    possibleMoves.push(grid - 20)
-  } else {
-    // do nothing
-  };
-  if((grid - 11) > -1 && (grid -11) < 49){
-    possibleMoves.push(grid - 11)
-  } else {
-    // do nothing
-  };
-  if((grid - 10) > -1 && (grid -10) < 49){
-    possibleMoves.push(grid - 10)
-  } else {
-    // do nothing
-  };
-  if((grid - 9) > -1 && (grid - 9) < 49){
-    possibleMoves.push(grid - 9)
-  } else {
-    // do nothing
-  };
-  if((grid - 2) > -1 && (grid - 2) < 49){
-    possibleMoves.push(grid - 2)
-  } else {
-    // do nothing
-  };
-  if((grid - 1) > -1 && (grid - 1) < 49){
-    possibleMoves.push(grid - 1)
-  } else {
-    // do nothing
-  };
-  if((grid - 0) > -1 && (grid - 0) < 49){
-    possibleMoves.push(grid - 0)
-  } else {
-    // do nothing
-  };
-  if((grid + 1) > -1 && (grid + 1) < 49){
-    possibleMoves.push(grid + 1)
-  } else {
-    // do nothing
-  };
-  if((grid + 2) > -1 && (grid + 2) < 49){
-    possibleMoves.push(grid + 2)
-  } else {
-    // do nothing
-  };
-  if((grid + 9) > -1 && (grid + 9) < 49){
-    possibleMoves.push(grid + 9)
-  } else {
-    // do nothing
-  };
-  if((grid + 10) > -1 && (grid + 10) < 49){
-    possibleMoves.push(grid + 10)
-  } else {
-    // do nothing
-  };
-  if((grid + 11) > -1 && (grid + 11) < 49){
-    possibleMoves.push(grid + 11)
-  } else {
-    // do nothing
-  };
-  if((grid + 20) > -1 && (grid + 20) < 49){
-    possibleMoves.push(grid + 20)
-  } else {
-    // do nothing
-  };
-// end of possibleMovesForwardFunc
-showPossibleMoves();
-}
-
-// Function to move puckLocation position
-var movePuck = function(){
-  puckLocation[currentMove[0]] = 0;
-  puckLocation[currentMove[1]] = 1;
-  currentMove = [];
-
-}
-
-// Function to highlight move space
-
-// Function to add click event to grid
-// $rink.on('click', '.grid', function(){
-//   if($turn){
-//   $(this).toggleClass('red');
-//   $turn = false;
-//   // console.log("Red Player at location " + $(this).attr('id'));
-// }else {
-//   $(this).toggleClass('blue');
-//   $turn = true;
-//   // console.log("Blue Player at location " + $(this).attr('id'));
-// }});
-
-// function to show possible moves when a square is clicked
-// $('.grid').on('click', function(){
-//   possibleMovesForwardFunc(Number($(this).attr('data-space')));
-//   console.log($(this).attr('data-space'));
-// })
-
-var showPossibleMoves = function(){
-  for(var i = 0; i<possibleMoves.length; i++){
-    $('#s' + possibleMoves[i]).addClass('possibleMove');
-  };
-}
-
-
-
-
 // Testing Section - Remove when testing is complete. If something is here, feature is not complete
 
-// if(s24 == s0 || s1 || s2 || s3 || s4 || s10 || s11 || s12 || s13 || s14 || s20 || s21 || s22 || s23 || s24 || s30 || s31 || s32 || s33 || s34 || s40 || s41 || s42 || s43 || s44){
-//   console.log('true');
-// }
 
 // End testing section
 var buildLocations = function(){
+  // First, destroy locations
+  destroyLocations();
   // RED TEAM
   $redForward1 = redForward1Location.indexOf(1);
-  $('#s' + $redForward1).addClass('redForward');
+  $('#s' + $redForward1).addClass('red forward');
   $redDefense1 = redDefense1Location.indexOf(1);
-  $('#s' + $redDefense1).addClass('redDefense');
+  $('#s' + $redDefense1).addClass('red');
   $redDefense2 = redDefense2Location.indexOf(1);
-  $('#s' + $redDefense2).addClass('redDefense');
+  $('#s' + $redDefense2).addClass('red');
   // BLUE TEAM
   $blueForward1 = blueForward1Location.indexOf(1);
-  $('#s' + $blueForward1).addClass('blueForward');
+  $('#s' + $blueForward1).addClass('blue forward');
   $blueDefense1 = blueDefense1Location.indexOf(1);
-  $('#s' + $blueDefense1).addClass('blueDefense');
+  $('#s' + $blueDefense1).addClass('blue');
   $blueDefense2 = blueDefense2Location.indexOf(1);
-  $('#s' + $blueDefense2).addClass('blueDefense');
+  $('#s' + $blueDefense2).addClass('blue');
 
   // Puck
   $puck = puckLocation.indexOf(1);
   $('#s' + $puck).addClass('puck');
+  console.log('locations were built')
+
+}
+var destroyLocations = function(){
+  // RED TEAM
+  $redForward1 = redForward1Location.indexOf(1);
+  $('#s' + $redForward1).removeClass('red forward');
+  $redDefense1 = redDefense1Location.indexOf(1);
+  $('#s' + $redDefense1).removeClass('red');
+  $redDefense2 = redDefense2Location.indexOf(1);
+  $('#s' + $redDefense2).removeClass('red');
+  // BLUE TEAM
+  $blueForward1 = blueForward1Location.indexOf(1);
+  $('#s' + $blueForward1).removeClass('blue forward');
+  $blueDefense1 = blueDefense1Location.indexOf(1);
+  $('#s' + $blueDefense1).removeClass('blue');
+  $blueDefense2 = blueDefense2Location.indexOf(1);
+  $('#s' + $blueDefense2).removeClass('blue');
+
+  // Puck
+  $('#s' + puckLocation.indexOf(1)).removeClass('puck');
+  console.log('Locations were destroyed');
 
 }
 // Function to show locations of elements in console
@@ -449,6 +502,8 @@ var showLocations = function(){
 
 var initialize = function(){
   buildLocations();
+  $('#s21').addClass('redgoalie');
+  $('#s28').addClass('bluegoalie');
   $startBtn.addClass('hide');
   $h1.text('FACEOFF!');
   $h2.text('Click your forward for the faceoff.');

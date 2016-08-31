@@ -35,14 +35,6 @@ margin: 0 auto;
   border-bottom-right-radius: 50%;
 }
 
-.puckRed {
-
-}
-
-.puckBlue {
-
-}
-
 .redDefense {
   background-color: red;
 }
@@ -51,14 +43,16 @@ margin: 0 auto;
   background-color: blue;
 }
 
-.redForward {
+.red {
   background-color: red;
-  border-radius: 50%
 }
 
-.blueForward {
+.blue {
   background-color: blue;
-  border-radius: 50%
+}
+
+.forward {
+  border-radius: 50%;
 }
 
 .puck {
@@ -68,9 +62,40 @@ background-repeat: no-repeat;
 }
 
 .possibleMove {
-  background-color: grey;
+  background-color: rgb(245, 245, 245);
+  border-radius: 50%;
 }
 
 .hide {
   display: none;
+}
+
+.redgoalie {
+  background-image: url(./redgoalie.png);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.bluegoalie {
+  background-image: url(./bluegoalie.png);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+ul {
+  display: inherit;
+  text-align: center;
+}
+
+li {
+  display: inherit;
+  text-align: center;
+  margin-left: -35px;
+}
+
+.menuItem {
+  position: relative;
+  left: 100px;
+  border: solid black 1px;
+  background-color: white;
 }
